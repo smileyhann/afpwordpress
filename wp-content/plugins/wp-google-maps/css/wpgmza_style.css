@@ -1,16 +1,14 @@
 .wpgmza_map {
     border:0;
+    
 }
-#wpgmza_map{
-     margin-top: -490px;
-}
+
 .wpgmza_map img {
     border: none !important;
     background-color:transparent !important;
     padding:0 !important;
     box-shadow: none !important;
     visibility: visible !important;
-
     
 }
 #wpgmza_map img { box-shadow: none !important; }

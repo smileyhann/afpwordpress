@@ -9,9 +9,7 @@
         <?php echo $messageNotSentView->Render(); ?>
     </div>
     <div class="cscfForm">
-        <h1>CONTACT US</h1>
-        <p style="margin-top:-10px;">Arturo Enrile Avenue, Quezon City 1100</p>
-        <p style="margin-top:-30px;">(02) 421 7607</p>
+        <p><?php echo $message; ?></p>
         <form role="form" id="frmCSCF" name="frmCSCF" method="post">
             <?php wp_nonce_field('cscf_contact','cscf_nonce'); ?>
             <input type="hidden" name="post-id" value="<?php echo $postID; ?>">
@@ -24,7 +22,7 @@
 
             <!-- name --> 
             <div class="control-group form-group<?php if (isset($contact->Errors['name'])) echo ' error has-error'; ?>">
-                
+                <label for="cscf_name"><?php _e('Name:','cleanandsimple');?></label>
                 <div class="<?php echo cscf_PluginSettings::InputIcons() ? "input-group" : ""; ?>">
                     <?php if ( cscf_PluginSettings::InputIcons() == true ) { ?>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
@@ -45,6 +43,7 @@
             
             <!--email address-->
             <div class="control-group form-group<?php if (isset($contact->Errors['email'])) echo ' error has-error'; ?>">
+                <label for="cscf_email"><?php _e('Email Address:','cleanandsimple');?></label>
                 <div class="<?php echo cscf_PluginSettings::InputIcons() ? "input-group" : ""; ?>">
                     <?php if ( cscf_PluginSettings::InputIcons() == true ) { ?>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
@@ -64,12 +63,37 @@
                 </span>
             </div>
 
-           
+            <?php if ( $confirmEmail ) { ?>
+            <!--confirm email address -->
+            <div class="control-group form-group<?php if (isset($contact->Errors['confirm-email'])) echo ' error has-error'; ?>">
+                <label for="cscf_confirm-email"><?php _e('Confirm Email Address:','cleanandsimple');?></label>
+                <div class="<?php echo cscf_PluginSettings::InputIcons() ? "input-group" : ""; ?>">
+                    <?php if ( cscf_PluginSettings::InputIcons() == true ) { ?>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                    <?php } ?>
+                    <input class="form-control input-xlarge"
+                        data-rule-required="true"
+                        data-rule-email="true"
+                        data-rule-equalTo="#cscf_email"
+                        data-msg-required="<?php _e('Please enter the same email address again.','cleanandsimple');?>"
+                        data-msg-email="<?php _e('Please enter a valid email address.','cleanandsimple');?>"
+                        data-msg-equalTo="<?php _e('Please enter the same email address again.','cleanandsimple');?>"
+                        type="email" id="cscf_confirm-email" name="cscf[confirm-email]" 
+                        value="<?php echo esc_attr($contact->ConfirmEmail); ?>"
+                        placeholder="<?php _e('Confirm Your Email Address','cleanandsimple');?>"
+                    />
+                </div>
+                <span for="cscf_confirm-email" class="help-inline help-block error" style="display:<?php echo isset($contact->Errors['confirm-email']) ? 'block' : 'none'; ?>;">
+                    <?php if (isset($contact->Errors['confirm-email'])) echo $contact->Errors['confirm-email']; ?>
+                </span>
+            </div> 
+            <?php } ?>
 
 
             <!-- message -->
             <div class="control-group form-group<?php if (isset($contact->Errors['message'])) echo ' error has-error'; ?>">
-                 <div class="<?php echo cscf_PluginSettings::InputIcons() ? "input-group" : ""; ?>">
+                <label for="cscf_message"><?php _e('Message:','cleanandsimple');?></label>
+                <div class="<?php echo cscf_PluginSettings::InputIcons() ? "input-group" : ""; ?>">
                     <?php if ( cscf_PluginSettings::InputIcons() == true ) { ?>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-comment"></span></span>
                     <?php } ?>
